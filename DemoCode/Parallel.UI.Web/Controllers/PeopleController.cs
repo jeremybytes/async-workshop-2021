@@ -18,7 +18,7 @@ namespace Parallel.UI.Web.Controllers
 
             try
             {
-                List<int> ids = await reader.GetIdsAsync().ConfigureAwait(false);
+                List<int> ids = await reader.GetIdsAsync();
                 var people = new List<Person>();
                 var taskList = new List<Task>();
 
@@ -33,7 +33,7 @@ namespace Parallel.UI.Web.Controllers
                     }, TaskContinuationOptions.OnlyOnRanToCompletion);
                 }
 
-                await Task.WhenAll(taskList).ConfigureAwait(false);
+                await Task.WhenAll(taskList);
                 return View("Index", people);
             }
             catch (Exception ex)
@@ -53,12 +53,12 @@ namespace Parallel.UI.Web.Controllers
             ViewData["RequestStart"] = DateTime.Now;
             try
             {
-                List<int> ids = await reader.GetIdsAsync().ConfigureAwait(false);
+                List<int> ids = await reader.GetIdsAsync();
                 var people = new List<Person>();
 
                 foreach(int id in ids)
                 {
-                    people.Add(await reader.GetPersonAsync(id).ConfigureAwait(false));
+                    people.Add(await reader.GetPersonAsync(id));
                 }
 
                 return View("Index", people);
