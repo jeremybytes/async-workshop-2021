@@ -89,7 +89,8 @@ public async Task<List<Person>> GetPeopleAsync(IProgress<int> progress,
     CancellationToken cancelToken = new CancellationToken()) {...}
 ```
 
-**Hands-On Labs (Bonus Material)**  
+Hands-On Labs (Bonus Material)  
+--------------
 The "Labs" folder contains hands-on labs. These labs are not directly covered in the workshop due to time constraints but are provided as additional resources that can be completed separately.  
 
 * [Lab 01 - Recommended Practices and Continuations](https://github.com/jeremybytes/async-workshop-2021/tree/main/Labs/Lab01)
