@@ -26,13 +26,11 @@ namespace TaskAwait.Library
 
             cancelToken.ThrowIfCancellationRequested();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var stringResult = 
-                    await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                return JsonSerializer.Deserialize<List<Person>>(stringResult, options);
-            }
-            return new List<Person>();
+            if (!response.IsSuccessStatusCode) return new List<Person>();
+
+            var stringResult = 
+                await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonSerializer.Deserialize<List<Person>>(stringResult, options);
         }
 
         public async Task<List<int>> GetIdsAsync(
@@ -40,13 +38,11 @@ namespace TaskAwait.Library
         {
             HttpResponseMessage response = 
                 await client.GetAsync("people/ids", cancelToken).ConfigureAwait(false);
-            if (response.IsSuccessStatusCode)
-            {
-                var stringResult = 
-                    await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                return JsonSerializer.Deserialize<List<int>>(stringResult);
-            }
-            return new List<int>();
+            if (!response.IsSuccessStatusCode) return new List<int>();
+
+            var stringResult = 
+                await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonSerializer.Deserialize<List<int>>(stringResult);
         }
 
         public Person GetPerson(int id)
@@ -66,13 +62,11 @@ namespace TaskAwait.Library
 
             cancelToken.ThrowIfCancellationRequested();
 
-            if (response.IsSuccessStatusCode)
-            {
-                var stringResult =
-                    await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                return JsonSerializer.Deserialize<Person>(stringResult, options);
-            }
-            return new Person();
+            if (!response.IsSuccessStatusCode) return new Person();
+
+            var stringResult =
+                await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            return JsonSerializer.Deserialize<Person>(stringResult, options);
 
             // Async over Sync
             // This is not the best solution, but it shows how to write

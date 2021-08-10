@@ -33,8 +33,7 @@ namespace Parallel.UI
                 foreach (int id in ids)
                 {
                     Task<Person> personTask = reader.GetPersonAsync(id, tokenSource.Token);
-                    taskList.Add(personTask);
-                    _ = personTask.ContinueWith(task =>
+                    Task continuation = personTask.ContinueWith(task =>
                     {
                         Person person = task.Result;
                         PersonListBox.Items.Add(person);
@@ -42,6 +41,7 @@ namespace Parallel.UI
                     CancellationToken.None,
                     TaskContinuationOptions.OnlyOnRanToCompletion,
                     TaskScheduler.FromCurrentSynchronizationContext());
+                    taskList.Add(continuation);
                 }
 
                 await Task.WhenAll(taskList);

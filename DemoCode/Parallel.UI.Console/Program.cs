@@ -57,14 +57,15 @@ namespace Parallel.UI
                 foreach (int id in ids)
                 {
                     Task<Person> personTask = reader.GetPersonAsync(id, tokenSource.Token);
-                    taskList.Add(personTask);
 
-                    _ = personTask.ContinueWith(task =>
+                    Task continuation = personTask.ContinueWith(task =>
                     {
                         Person person = task.Result;
                         Console.WriteLine(person.ToString());
                     },
                     TaskContinuationOptions.OnlyOnRanToCompletion);
+
+                    taskList.Add(continuation);
                 }
 
                 await Task.WhenAll(taskList).ConfigureAwait(false);
