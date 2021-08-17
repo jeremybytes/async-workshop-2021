@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TaskAwait.Library;
@@ -19,7 +20,7 @@ namespace Parallel.UI.Web.Controllers
             try
             {
                 List<int> ids = await reader.GetIdsAsync();
-                var people = new List<Person>();
+                var people = new BlockingCollection<Person>();
                 var taskList = new List<Task>();
 
                 foreach (int id in ids)
